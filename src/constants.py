@@ -17,3 +17,12 @@ GAIN_RATE = 1.2
 ALPACA_API_KEY = 'PKGYNPQTC8OD4FF2GS44' #Go to Alpaca to find your own api key
 ALPACA_SECRET_KEY = '0s2vro0wYJrbbj0QOfcQ9xYFEHUiMEbpzdwi9rpg'
 ALPACA_PAPER = True  #True when test in paper account
+
+QUANDL_API_KEY = "fDoLZUz5a9rcT4LKQMfs"
+
+#wscat -c wss://socket.polygon.io/stocks
+#{"action":"auth","params":"PKGYNPQTC8OD4FF2GS44"}
+
+# wscat -c wss://stream.data.alpaca.markets/v2/iex
+# {"action": "auth", "key": "PKGYNPQTC8OD4FF2GS44", "secret": "0s2vro0wYJrbbj0QOfcQ9xYFEHUiMEbpzdwi9rpg"}
+# {"action":"subscribe","trades":[],"quotes":["AAPL"],"bars":["AAPL"]}

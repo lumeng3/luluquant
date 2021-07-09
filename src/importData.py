@@ -20,12 +20,21 @@ def getDataFromAlpaca(ticker):
         2021, 3, 1), timeframe=bt.TimeFrame.Days)
     return data0
 
-def getDataFromYahooFinance(ticker):
+def getDataFromQuandl(ticker):
+    today = datetime.today()
+    mydata = bt.feeds.Quandl(dataname=ticker,
+                             apikey = QUANDL_API_KEY,
+                             dataset = "WIKI",
+                             fromdate=datetime(2020, 12, 5),
+                             todate=datetime(today.year, today.month, today.day))
+    return mydata
+
+def getDataFromYahooFinance(ticker):  #Yahoo sucks
     data0 = bt.feeds.YahooFinanceData(
             dataname=ticker,
             name=ticker,
-            fromdate=datetime(2018, 5, 13),
-            todate=datetime(2021, 5, 13),
+            fromdate=datetime(2020, 12, 5),
+            todate=datetime(2021, 6, 14),
             reverse=False
     )
     return data0
@@ -35,7 +44,7 @@ def getDataFromLocalYahooFinance(ticker):
     data0 = bt.feeds.YahooFinanceCSVData(
             dataname=fileName,
             name=ticker,
-            fromdate=datetime(2018, 5, 13),
-            todate=datetime(2021, 5, 13)
+            fromdate=datetime(2021, 3, 11),
+            todate=datetime(2021, 6, 11)
     )
     return data0
