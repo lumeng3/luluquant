@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, time
 
 from pytz import timezone
 
-#代码没有写完，被trading view 实现了，这个运行会报错。
+#代码没有写完，回踩GMMA的功能被trading view能更好的实现，这个代码写到了计算EMA六条线，只要补齐realtime数据回踩的部分就可以使用了。
 
 ALPACA_API_KEY = 'PKGYNPQTC8OD4FF2GS44' #Go to Alpaca to find your own api key
 ALPACA_SECRET_KEY = '0s2vro0wYJrbbj0QOfcQ9xYFEHUiMEbpzdwi9rpg'
