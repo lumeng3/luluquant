@@ -22,6 +22,11 @@
 5. pip install alpaca-backtrader-api
 6. pip install matplotlib
 7. pip install get-all-tickers
+8. pip install stock-pandas
+9. pip install -U numpy
+10. pip install yfinance
+
+有的包在不同的文件里才用到，自己看一下import选择性安装
 
 ## 使用方法
 

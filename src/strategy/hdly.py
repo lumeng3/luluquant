@@ -1,4 +1,5 @@
 from datetime import timedelta
+from json import JSONDecodeError
 
 import numpy as np
 from stock_pandas import StockDataFrame
@@ -16,7 +17,10 @@ for ticker in tickers:
     print('Checking ticker: %s' % ticker)
     currDate = datetime.today() - timedelta(days=hdly_DAYS)
     tickerInfo = yf.Ticker(ticker)
-    df = tickerInfo.history(period="1000d")
+    try:
+       df = tickerInfo.history(period="5000d", interval="1mo")#1wk 1d
+    except JSONDecodeError:
+        continue
     df = df.rename(columns={"Open": "open", "Close": "close", "High": "high", "Low": "low", "Volumn":"volumn"})
     stock = StockDataFrame(
         df
@@ -79,9 +83,11 @@ for ticker in tickers:
 
     for i in stock["final"].iloc[-7:-1]:
         if i > 0:
+            print("found ticker" + ticker)
             selected_tickers.append(ticker)
+            print(selected_tickers)
+            break
 
-print(selected_tickers)
 
 
 
