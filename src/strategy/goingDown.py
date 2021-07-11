@@ -77,11 +77,8 @@ for ticker in tickers:
    # print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
     CURRENT_TICKER = ticker
     SELECTED_FLAG = False
-    try:
-        cerebro.run()
-    except OSError:
-        continue
-    except IndexError:
-        continue
+
+    cerebro.run()
+
 
 print(SELECTED_TICKERS)

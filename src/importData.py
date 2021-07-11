@@ -1,5 +1,9 @@
 import json
 import alpaca_backtrader_api
+import requests
+import quandl
+import pandas
+
 from src.constants import *
 import backtrader as bt
 from datetime import datetime
@@ -17,17 +21,14 @@ def getDataFromAlpaca(ticker):
     )
     DataFactory = store.getdata
     data0 = DataFactory(dataname=ticker, historical=True, fromdate=datetime(
-        2021, 3, 1), timeframe=bt.TimeFrame.Days)
+        2018, 3, 1), timeframe=bt.TimeFrame.Days)
     return data0
 
 def getDataFromQuandl(ticker):
-    today = datetime.today()
-    mydata = bt.feeds.Quandl(dataname=ticker,
-                             apikey = QUANDL_API_KEY,
-                             dataset = "WIKI",
-                             fromdate=datetime(2020, 12, 5),
-                             todate=datetime(today.year, today.month, today.day))
-    return mydata
+    quandl.ApiConfig.api_key = QUANDL_API_KEY
+    df = quandl.get_table('ZACKS/FC',ticker=ticker, paginate=True)
+    df.rename(columns={'settle': 'close', 'prev_day_open_interest': 'openinterest'}, inplace=True)
+    return df
 
 def getDataFromYahooFinance(ticker):  #Yahoo sucks
     data0 = bt.feeds.YahooFinanceData(
