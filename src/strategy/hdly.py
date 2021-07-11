@@ -12,6 +12,18 @@ hdly_DAYS = 2000
 selected_tickers=[]
 tickers = getAllTickers()
 
+#执行前，打开stock_panda里面的time_frame文件夹下面 有一个common.py
+#需要把62行 替换成下面代码
+# column_enums = partial(create_enum, [
+#     'open',
+#     'high',
+#     'low',
+#     'close',
+#     "hhv485","hhv222","hhv96","llv485","llv222","llv96",
+#     "var7_1","var8_1","var9_1","varA_1","varE_1","varE_3",
+#     "varF_1","varF","final_2"
+# ], 'column')
+
 #tickers = ["BTX"]
 for ticker in tickers:
     print('Checking ticker: %s' % ticker)
