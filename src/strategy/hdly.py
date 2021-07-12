@@ -4,6 +4,7 @@ from json import JSONDecodeError
 import numpy as np
 from stock_pandas import StockDataFrame
 import yfinance as yf
+from stock_pandas.math.ma import calc_smma
 
 from src.getTickers import getAllTickers
 from src.importData import *
@@ -24,13 +25,13 @@ tickers = getAllTickers()
 #     "varF_1","varF","final_2"
 # ], 'column')
 
-#tickers = ["BTX"]
+tickers = ["AAPL"]
 for ticker in tickers:
     print('Checking ticker: %s' % ticker)
     currDate = datetime.today() - timedelta(days=hdly_DAYS)
     tickerInfo = yf.Ticker(ticker)
     try:
-       df = tickerInfo.history(period="5000d", interval="1mo")#1wk 1d
+       df = tickerInfo.history(period="5000d", interval="1d")#1wk 1d
     except JSONDecodeError:
         continue
     df = df.rename(columns={"Open": "open", "Close": "close", "High": "high", "Low": "low", "Volumn":"volumn"})
@@ -76,9 +77,9 @@ for ticker in tickers:
     #stock["varC"] = stock["low"]
     stock["varD"] = stock['low'].shift(1)
     stock["varE_1"] = abs(stock['low']-stock["varD"]) #ABS(VARC - VARD)
-    stock["varE_2"] = stock['ema:3,varE_1']
+    stock["varE_2"] = calc_smma(stock['varE_1'].to_numpy(),3) #stock['smma:3,varE_1']
     stock['varE_3'] = np.where(stock['low']-stock["varD"] > 0, stock['low']-stock["varD"], 0) #MAX(VARC - VARD, 0)
-    stock["varE_4"] = stock['ema:3,varE_3']
+    stock["varE_4"] = calc_smma(stock['varE_3'].to_numpy(),3) #stock['smma:3,varE_3']
     stock["varE"] = stock["varE_2"] / stock["varE_4"] * 100
 
     stock['varF_1'] = np.where(stock['close'] * 1.35 <= stock["varB"], stock["varE"] * 10, stock["varE"] / 10)  # MAX(VARC - VARD, 0)
@@ -87,7 +88,7 @@ for ticker in tickers:
     stock["var10"] = stock['llv:30,low']
     stock["var11"] = stock['hhv:30,varF']
 
-    VAR12 = 100
+    VAR12 = 1990831
 
     stock["final_1"] = (stock["varF"] + stock["var11"] * 2) / 2
     stock["final_2"] = np.where(stock['low'] <= stock["var10"], stock["final_1"], 0)  # MAX(VARC - VARD, 0)
