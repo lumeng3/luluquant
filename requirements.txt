@@ -1,0 +1,8 @@
+TA-Lib==0.4.20
+requests==2.25.1
+pandas==1.1.5 
+numpy==1.19.4 
+scipy==1.5.4
+alpaca-backtrader-api==0.13.1
+matplotlib==3.4.2
+get-all-tickers==1.7
